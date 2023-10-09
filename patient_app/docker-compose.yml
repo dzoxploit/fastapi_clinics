@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  # FastAPI application
+  app:
+    image: my-fastapi-app
+    build:
+      context: ./app # Path to your FastAPI app code
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=mysql://root@db:3306/zicare # No password for root
+    networks:
+      - app-network
+
+  # MySQL database
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes" # No password for root
+      MYSQL_DATABASE: zicare # Database name is zicare
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:

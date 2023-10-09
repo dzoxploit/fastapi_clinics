@@ -1,0 +1,5 @@
+fastapi==0.68.0
+uvicorn==0.15.0
+SQLAlchemy==2.0.21
+mysql-connector-python==8.0.27  # Required for MySQL (adjust version if needed)
+pydantic==1.8.2  # 
